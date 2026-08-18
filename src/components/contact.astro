@@ -1,0 +1,103 @@
+---
+import { nowItems } from "../data/now";
+import { writingLinks } from "../data/writing";
+import { links } from "../data/links";
+---
+
+<section
+  id="now"
+  class="w-full py-12 border-t border-[#ffffff10] text-[var(--white)]"
+>
+  <div class="max-w-5xl mx-auto grid md:grid-cols-[0.85fr_1.15fr] gap-8">
+    <div>
+      <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">Now / Lab</h2>
+      <h3 class="text-3xl md:text-5xl font-medium">Current experiments</h3>
+    </div>
+    <div class="grid gap-3">
+      {
+        nowItems.map((item) => (
+          <p class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-4 text-[var(--white-icon)] leading-relaxed">
+            {item}
+          </p>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section
+  id="writing"
+  class="w-full py-12 border-t border-[#ffffff10] text-[var(--white)]"
+>
+  <div class="max-w-5xl mx-auto">
+    <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">Writing</h2>
+    <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+      <h3 class="text-3xl md:text-5xl font-medium">Notes and writeups</h3>
+      <a
+        href={links.blog}
+        target="_blank"
+        class="text-[var(--background)] border border-[var(--sec)] px-5 py-3 rounded-xl bg-[var(--sec)] hover:opacity-90 transition"
+      >
+        Visit blog
+      </a>
+    </div>
+    <div class="grid md:grid-cols-3 gap-5">
+      {
+        writingLinks.map((item) => (
+          <a
+            href={item.href}
+            target="_blank"
+            class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-5 min-h-40 hover:bg-[var(--white-icon-tr)] transition"
+          >
+            <h4 class="text-xl font-semibold mb-3">{item.title}</h4>
+            <p class="text-[var(--white-icon)] leading-relaxed">
+              {item.description}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </div>
+</section>
+
+<section
+  id="about"
+  class="w-full py-12 border-t border-[#ffffff10] text-[var(--white)]"
+>
+  <div class="max-w-5xl mx-auto grid md:grid-cols-[0.85fr_1.15fr] gap-8">
+    <div>
+      <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">About</h2>
+      <h3 class="text-3xl md:text-5xl font-medium">Security-minded builder</h3>
+    </div>
+    <div class="space-y-5 text-[var(--white-icon)] leading-relaxed">
+      <p>
+        I work with development teams, architects, delivery leaders, and security
+        stakeholders to integrate security into the software development
+        lifecycle. My background spans software engineering, DevSecOps,
+        automation, secure design reviews, threat modeling, and vulnerability
+        management.
+      </p>
+      <p>
+        I care about practical systems: tools that remove repetitive work,
+        security guidance that engineers can actually use, and infrastructure
+        that is understandable enough to maintain.
+      </p>
+      <div class="flex flex-wrap gap-2">
+        {
+          [
+            "Application Security",
+            "Threat Modeling",
+            "Secure SDLC",
+            "DevSecOps",
+            "API Security",
+            "Automation",
+          ].map((item) => (
+            <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">
+              {item}
+            </span>
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>

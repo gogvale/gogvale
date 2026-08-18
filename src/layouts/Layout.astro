@@ -1,0 +1,141 @@
+---
+interface Props {
+  title: string;
+}
+
+const { title } = Astro.props;
+const description =
+  "Gabriel Oliveira builds, automates, secures, and self-hosts software with a focus on application security, DevSecOps, cloud, AI, and practical engineering.";
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>{title} | Application Security and Automation</title>
+    <meta name="description" content={description} />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="canonical" href="https://www.oliveira.ninja/" />
+
+    <link
+      rel="preload"
+      href="/fonts/montserrat-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin="anonymous"
+    />
+
+    <meta
+      property="og:title"
+      content="Gabriel Oliveira | Application Security and Automation"
+    />
+    <meta property="og:description" content={description} />
+    <meta
+      property="og:image"
+      content="https://www.oliveira.ninja/og.image.png"
+    />
+    <meta property="og:url" content="https://www.oliveira.ninja" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="Gabriel Oliveira" />
+
+    <script type="application/ld+json" is:inline>
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Gabriel Oliveira",
+        "url": "https://www.oliveira.ninja",
+        "image": "https://www.oliveira.ninja/og.image.png",
+        "sameAs": [
+          "https://github.com/gogvale",
+          "https://www.linkedin.com/in/gogvale",
+          "https://blog.oliveira.ninja"
+        ],
+        "jobTitle": "Application Security SME",
+        "description": "Application security and automation engineer focused on secure SDLC, DevSecOps, threat modeling, and practical tooling."
+      }
+    </script>
+  </head>
+  <body class="bg-[--background] sm:px-28 lg:px-20 px-6">
+    <slot />
+  </body>
+</html>
+
+<style is:global>
+  @font-face {
+    font-family: "Montserrat Variable";
+    src: url("/fonts/montserrat-latin-wght-normal.woff2")
+      format("woff2-variations");
+    font-weight: 100 900;
+    font-style: normal;
+    font-display: swap;
+  }
+
+  :root {
+    --background: #101010;
+    --sec: #7dd3fc;
+    --white: #dfdfdf;
+    --white-icon: #f3f3f398;
+    --white-icon-tr: #f3f3f310;
+  }
+
+  * {
+    font-family:
+      "Montserrat Variable",
+      -apple-system,
+      system-ui,
+      sans-serif;
+    box-sizing: border-box;
+    padding: 0;
+    margin: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  *::selection {
+    background-color: var(--sec);
+    color: var(--background);
+  }
+
+  a:focus-visible,
+  button:focus-visible {
+    outline: 2px solid var(--sec);
+    outline-offset: 4px;
+  }
+
+  ::-webkit-scrollbar {
+    width: 15px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #181818;
+    border-radius: 30px;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #2a2a2a;
+    border-radius: 10px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: var(--sec);
+  }
+
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: #2a2a2a #181818;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      scroll-behavior: auto !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+</style>
