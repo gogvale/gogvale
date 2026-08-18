@@ -1,17 +1,17 @@
 export const writingLinks = [
   {
     title: "Blog home",
-    description: "Longer notes, experiments, and writeups will live here.",
+    description: "Longer notes, experiments, and writeups live here.",
     href: "https://blog.oliveira.ninja",
   },
   {
-    title: "Security notes",
-    description: "Public reference notes around cybersecurity and application security.",
-    href: "https://github.com/gogvale/CyberSecNotes",
+    title: "Project writeups",
+    description: "Under construction while I turn current work into useful, readable case studies.",
+    href: "https://blog.oliveira.ninja",
   },
   {
-    title: "DevSecOps notes",
-    description: "Practical secure delivery and DevSecOps notes.",
-    href: "https://github.com/gogvale/DevSecOps-Notes",
+    title: "Lab notes",
+    description: "Small experiments and weekend builds will land here once they are cleaned up.",
+    href: "https://blog.oliveira.ninja",
   },
 ];

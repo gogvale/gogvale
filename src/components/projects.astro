@@ -1,55 +1,33 @@
----
-import { projects } from "../data/projects";
----
-
 <section
   id="projects"
   class="py-12 border-t border-[#ffffff10] text-[var(--white)]"
 >
   <div class="max-w-5xl mx-auto">
-    <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">Selected projects</h2>
+    <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">Projects</h2>
     <h3 class="text-3xl md:text-5xl font-medium mb-8">
-      Built, studied, and automated
+      Under construction
     </h3>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
-      {
-        projects.map((project) => (
-          <article class="group border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-5 min-h-[260px] flex flex-col">
-            <a
-              href={project.href}
-              target="_blank"
-              rel="noopener noreferrer"
-              class="block flex-1"
-            >
-              <div class="flex flex-col h-full">
-                <h4 class="text-2xl font-semibold mb-3">{project.title}</h4>
-                <p class="text-[var(--white-icon)] leading-relaxed mb-4">
-                  {project.summary}
-                </p>
-                <p class="text-sm text-[var(--sec)] leading-relaxed mb-5">
-                  {project.angle}
-                </p>
-                <div class="flex flex-wrap gap-2 mt-auto">
-                  {project.tags.map((tag) => (
-                    <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </a>
-          </article>
-        ))
-      }
-    </div>
-    <a
-      target="_blank"
-      href="https://github.com/gogvale?tab=repositories"
-      aria-label="More projects on GitHub"
-      class="w-full flex items-center justify-center gap-2 mt-9 text-[var(--white-icon)] hover:text-white transition duration-300 ease-in-out border border-[var(--white-icon-tr)] p-3 rounded-full bg-[#1414149c] hover:bg-[var(--white-icon-tr)] hover:scale-[1.01]"
-    >
-      <span class="md:text-lg text-md">More projects on GitHub</span>
-    </a>
+    <article class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-6 md:p-8">
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="space-y-3">
+          <p class="text-2xl font-semibold">Good projects take a minute.</p>
+          <p class="text-[var(--white-icon)] leading-relaxed max-w-2xl">
+            I am rebuilding this section around work that is current, useful,
+            and worth explaining properly. Old proof-of-concepts are staying in
+            the workshop until they earn a spot here.
+          </p>
+        </div>
+        <div class="flex flex-wrap gap-2 md:justify-end">
+          {
+            ["AppSec", "Automation", "Homelab", "AI tooling"].map((tag) => (
+              <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">
+                {tag}
+              </span>
+            ))
+          }
+        </div>
+      </div>
+    </article>
   </div>
 </section>
