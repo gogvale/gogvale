@@ -41,7 +41,7 @@ import { links } from "../data/links";
         Visit blog
       </a>
     </div>
-    <div class="grid md:grid-cols-3 gap-5">
+    <div class="grid md:grid-cols-3 gap-5" id="latest-posts">
       {
         writingLinks.map((item) => (
           <a
@@ -59,6 +59,72 @@ import { links } from "../data/links";
     </div>
   </div>
 </section>
+
+<script>
+  // Live "Latest posts" — fetches the blog's Atom feed and renders the most
+  // recent entries. Falls back to the static cards above when the fetch
+  // fails or JavaScript is unavailable.
+  (async function () {
+    const container = document.getElementById("latest-posts");
+    if (!container) return;
+
+    const escapeHtml = (s: string) =>
+      s
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#39;");
+
+    try {
+      const res = await fetch("https://blog.oliveira.ninja/feed.xml", {
+        cache: "no-cache",
+      });
+      if (!res.ok) return;
+
+      const xml = await res.text();
+      const doc = new DOMParser().parseFromString(xml, "application/xml");
+      if (doc.querySelector("parsererror")) return;
+
+      const entries = Array.from(doc.querySelectorAll("entry")).slice(0, 3);
+      if (!entries.length) return;
+
+      const cards = entries
+        .map((entry) => {
+          const title =
+            entry.querySelector("title")?.textContent?.trim() || "Untitled";
+          const link =
+            entry.querySelector("link")?.getAttribute("href") || "#";
+          const pub =
+            entry.querySelector("published")?.textContent ||
+            entry.querySelector("updated")?.textContent ||
+            "";
+          const date = pub
+            ? new Date(pub).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            : "";
+          const summary =
+            entry.querySelector("summary")?.textContent?.trim() ||
+            "Read the full post on the blog.";
+
+          return `
+            <a href="${escapeHtml(link)}" target="_blank" class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-5 min-h-40 hover:bg-[var(--white-icon-tr)] transition flex flex-col">
+              <h4 class="text-xl font-semibold mb-3">${escapeHtml(title)}</h4>
+              <p class="text-[var(--white-icon)] leading-relaxed mb-4 line-clamp-3">${escapeHtml(summary)}</p>
+              ${date ? `<span class="mt-auto text-sm text-[var(--white-icon)] opacity-70">${escapeHtml(date)}</span>` : ""}
+            </a>`;
+        })
+        .join("");
+
+      container.innerHTML = cards;
+    } catch (e) {
+      // Keep the static fallback cards.
+    }
+  })();
+</script>
 
 <section
   id="about"
