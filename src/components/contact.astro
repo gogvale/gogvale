@@ -95,6 +95,13 @@ import { links } from "../data/links";
             entry.querySelector("title")?.textContent?.trim() || "Untitled";
           const link =
             entry.querySelector("link")?.getAttribute("href") || "#";
+          // Banner image from the blog feed's media:thumbnail (namespace-aware:
+          // use getElementsByTagName since querySelector with a colon is unreliable)
+          const media =
+            entry.getElementsByTagName("media:thumbnail")[0] ||
+            entry.getElementsByTagName("thumbnail")[0] ||
+            entry.getElementsByTagName("media:content")[0];
+          const img = media?.getAttribute("url") || "";
           const pub =
             entry.querySelector("published")?.textContent ||
             entry.querySelector("updated")?.textContent ||
@@ -110,8 +117,12 @@ import { links } from "../data/links";
             entry.querySelector("summary")?.textContent?.trim() ||
             "Read the full post on the blog.";
 
+          const imgHtml = img
+            ? `<img src="${escapeHtml(img)}" alt="" loading="lazy" class="w-full h-28 object-cover rounded-lg border border-[var(--white-icon-tr)] mb-4" />`
+            : "";
           return `
             <a href="${escapeHtml(link)}" target="_blank" class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-5 min-h-40 hover:bg-[var(--white-icon-tr)] transition flex flex-col">
+              ${imgHtml}
               <h4 class="text-xl font-semibold mb-3">${escapeHtml(title)}</h4>
               <p class="text-[var(--white-icon)] leading-relaxed mb-4 line-clamp-3">${escapeHtml(summary)}</p>
               ${date ? `<span class="mt-auto text-sm text-[var(--white-icon)] opacity-70">${escapeHtml(date)}</span>` : ""}
