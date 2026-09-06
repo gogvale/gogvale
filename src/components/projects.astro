@@ -4,30 +4,58 @@
 >
   <div class="max-w-5xl mx-auto">
     <h2 class="text-lg text-[var(--sec)] mb-2 shiny-sec">Projects</h2>
-    <h3 class="text-3xl md:text-5xl font-medium mb-8">
-      Under construction
-    </h3>
+    <h3 class="text-3xl md:text-5xl font-medium mb-8">Things I have built</h3>
 
-    <article class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-6 md:p-8">
-      <div class="flex flex-col md:flex-row md:items-center justify-between gap-6">
-        <div class="space-y-3">
-          <p class="text-2xl font-semibold">Good projects take a minute.</p>
-          <p class="text-[var(--white-icon)] leading-relaxed max-w-2xl">
-            I am rebuilding this section around work that is current, useful,
-            and worth explaining properly. Old proof-of-concepts are staying in
-            the workshop until they earn a spot here.
-          </p>
+    <div class="grid md:grid-cols-3 gap-5">
+      <a
+        href="https://blog.oliveira.ninja/posts/jellyfin-r2-family-library/"
+        target="_blank"
+        class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-5 hover:bg-[var(--white-icon-tr)] transition flex flex-col"
+      >
+        <h4 class="text-xl font-semibold mb-3">Family Media Platform</h4>
+        <p class="text-[var(--white-icon)] leading-relaxed mb-4">
+          Jellyfin on a droplet, the library on Cloudflare R2 — four
+          households, two countries, egress that costs nothing.
+        </p>
+        <div class="mt-auto flex flex-wrap gap-2">
+          <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">Self-hosting</span>
+          <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">Jellyfin</span>
+          <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">R2</span>
         </div>
-        <div class="flex flex-wrap gap-2 md:justify-end">
-          {
-            ["AppSec", "Automation", "Homelab", "AI tooling"].map((tag) => (
-              <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">
-                {tag}
-              </span>
-            ))
-          }
+      </a>
+
+      <a
+        href="https://blog.oliveira.ninja/posts/cgnat-meet-ssh-nas-tunnel/"
+        target="_blank"
+        class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-5 hover:bg-[var(--white-icon-tr)] transition flex flex-col"
+      >
+        <h4 class="text-xl font-semibold mb-3">CGNAT NAS Tunnel</h4>
+        <p class="text-[var(--white-icon)] leading-relaxed mb-4">
+          A NAS behind carrier-grade NAT that answers from a cloud server —
+          one outbound SSH tunnel, zero inbound ports.
+        </p>
+        <div class="mt-auto flex flex-wrap gap-2">
+          <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">SSH</span>
+          <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">CGNAT</span>
+          <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">NAS</span>
         </div>
-      </div>
-    </article>
+      </a>
+
+      <a
+        href="https://blog.oliveira.ninja/posts/hermes-on-a-droplet/"
+        target="_blank"
+        class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-5 hover:bg-[var(--white-icon-tr)] transition flex flex-col"
+      >
+        <h4 class="text-xl font-semibold mb-3">Hermes on a Droplet</h4>
+        <p class="text-[var(--white-icon)] leading-relaxed mb-4">
+          My AI assistant with a permanent home — it answers from my phone,
+          remembers context between chats, and writes about its own setup.
+        </p>
+        <div class="mt-auto flex flex-wrap gap-2">
+          <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">AI tooling</span>
+          <span class="text-xs text-[var(--white)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1">Automation</span>
+        </div>
+      </a>
+    </div>
   </div>
 </section>
