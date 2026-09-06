@@ -41,11 +41,6 @@ import { links } from "../data/links";
         Visit blog
       </a>
     </div>
-    <div class="flex flex-wrap gap-2 mb-5" id="latest-filters">
-      <button type="button" data-filter="all" class="feed-chip active text-xs text-[var(--background)] border border-[var(--sec)] bg-[var(--sec)] rounded-full px-3 py-1 transition cursor-pointer">All</button>
-      <button type="button" data-filter="project-writeup" class="feed-chip text-xs text-[var(--white-icon)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1 transition cursor-pointer hover:bg-[var(--white-icon-tr)]">Projects</button>
-      <button type="button" data-filter="self-hosting" class="feed-chip text-xs text-[var(--white-icon)] border border-[var(--white-icon-tr)] rounded-full px-3 py-1 transition cursor-pointer hover:bg-[var(--white-icon-tr)]">Self-hosting</button>
-    </div>
     <div class="grid md:grid-cols-3 gap-5" id="latest-posts">
       {
         writingLinks.map((item) => (
@@ -91,90 +86,51 @@ import { links } from "../data/links";
       const doc = new DOMParser().parseFromString(xml, "application/xml");
       if (doc.querySelector("parsererror")) return;
 
-      const all = Array.from(doc.querySelectorAll("entry"));
-      if (!all.length) return;
+      const entries = Array.from(doc.querySelectorAll("entry")).slice(0, 3);
+      if (!entries.length) return;
 
-      const parsed = all.map((entry) => {
-        const title =
-          entry.querySelector("title")?.textContent?.trim() || "Untitled";
-        const link =
-          entry.querySelector("link")?.getAttribute("href") || "#";
-        const cats = Array.from(entry.querySelectorAll("category"))
-          .map((c) => (c.getAttribute("term") || "").toLowerCase())
-          .filter(Boolean);
-        // Banner image from the blog feed's media:thumbnail (namespace-aware:
-        // use getElementsByTagName since querySelector with a colon is unreliable)
-        const media =
-          entry.getElementsByTagName("media:thumbnail")[0] ||
-          entry.getElementsByTagName("thumbnail")[0] ||
-          entry.getElementsByTagName("media:content")[0];
-        const img = media?.getAttribute("url") || "";
-        const pub =
-          entry.querySelector("published")?.textContent ||
-          entry.querySelector("updated")?.textContent ||
-          "";
-        const date = pub
-          ? new Date(pub).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "short",
-              day: "numeric",
-            })
-          : "";
-        const summary =
-          entry.querySelector("summary")?.textContent?.trim() ||
-          "Read the full post on the blog.";
-        return { title, link, img, date, summary, cats };
-      });
+      const cards = entries
+        .map((entry) => {
+          const title =
+            entry.querySelector("title")?.textContent?.trim() || "Untitled";
+          const link =
+            entry.querySelector("link")?.getAttribute("href") || "#";
+          // Banner image from the blog feed's media:thumbnail (namespace-aware:
+          // use getElementsByTagName since querySelector with a colon is unreliable)
+          const media =
+            entry.getElementsByTagName("media:thumbnail")[0] ||
+            entry.getElementsByTagName("thumbnail")[0] ||
+            entry.getElementsByTagName("media:content")[0];
+          const img = media?.getAttribute("url") || "";
+          const pub =
+            entry.querySelector("published")?.textContent ||
+            entry.querySelector("updated")?.textContent ||
+            "";
+          const date = pub
+            ? new Date(pub).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })
+            : "";
+          const summary =
+            entry.querySelector("summary")?.textContent?.trim() ||
+            "Read the full post on the blog.";
 
-      let active = "all";
-      const chips = Array.from(
-        document.querySelectorAll("#latest-filters .feed-chip")
-      );
-      const ACTIVE_CLASSES = [
-        "bg-[var(--sec)]",
-        "text-[var(--background)]",
-        "border-[var(--sec)]",
-      ];
-
-      const render = () => {
-        const list =
-          active === "all"
-            ? parsed
-            : parsed.filter((e) => e.cats.includes(active));
-        if (!list.length) {
-          container.innerHTML =
-            '<p class="text-[var(--white-icon)] leading-relaxed">Nothing in this filter yet — the newest posts land here automatically.</p>';
-          return;
-        }
-        container.innerHTML = list
-          .slice(0, 3)
-          .map((e) => {
-            const imgHtml = e.img
-              ? `<img src="${escapeHtml(e.img)}" alt="" loading="lazy" class="w-full h-28 object-cover rounded-lg border border-[var(--white-icon-tr)] mb-4" />`
-              : "";
-            return `
-            <a href="${escapeHtml(e.link)}" target="_blank" class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-5 min-h-40 hover:bg-[var(--white-icon-tr)] transition flex flex-col">
+          const imgHtml = img
+            ? `<img src="${escapeHtml(img)}" alt="" loading="lazy" class="w-full h-28 object-cover rounded-lg border border-[var(--white-icon-tr)] mb-4" />`
+            : "";
+          return `
+            <a href="${escapeHtml(link)}" target="_blank" class="border border-[var(--white-icon-tr)] rounded-xl bg-[#1414149c] p-5 min-h-40 hover:bg-[var(--white-icon-tr)] transition flex flex-col">
               ${imgHtml}
-              <h4 class="text-xl font-semibold mb-3">${escapeHtml(e.title)}</h4>
-              <p class="text-[var(--white-icon)] leading-relaxed mb-4 line-clamp-3">${escapeHtml(e.summary)}</p>
-              ${e.date ? `<span class="mt-auto text-sm text-[var(--white-icon)] opacity-70">${escapeHtml(e.date)}</span>` : ""}
+              <h4 class="text-xl font-semibold mb-3">${escapeHtml(title)}</h4>
+              <p class="text-[var(--white-icon)] leading-relaxed mb-4 line-clamp-3">${escapeHtml(summary)}</p>
+              ${date ? `<span class="mt-auto text-sm text-[var(--white-icon)] opacity-70">${escapeHtml(date)}</span>` : ""}
             </a>`;
-          })
-          .join("");
-      };
+        })
+        .join("");
 
-      chips.forEach((chip) => {
-        chip.addEventListener("click", () => {
-          active = (chip as HTMLElement).dataset.filter || "all";
-          chips.forEach((c) =>
-            c.classList.remove(...ACTIVE_CLASSES)
-          );
-          chip.classList.add(...ACTIVE_CLASSES);
-          render();
-        });
-      });
-
-      render();
+      container.innerHTML = cards;
     } catch (e) {
       // Keep the static fallback cards.
     }
